@@ -1,3 +1,6 @@
+(function () {
+
+
 var accounts;
 var startload = 0;
 var endload = 10;
@@ -46,8 +49,7 @@ function preloadselection(originobject) {
 	var object = JSON.stringify(originobject);
 	object = JSON.parse(object);
 	object['users'].forEach(function(item,i){
-		if ((item.id > endload) && (item.id > startload)){
-			console.log(item.id)
+		if ((item.id > endload) || (item.id < startload)){
 			delete( object['users'][i]);
 		}
 	});
@@ -67,15 +69,13 @@ function scrollisten() {
 }
 
 function templating(accounts) {
-	console.log(accounts);
 	var accountstemplate = $("#accounts").text();
-	//console.log(accountstemplate);
-
 	var data = _.template(accountstemplate);
 	var insertdata =data(accounts);
 	var ul = document.createElement('ul');
 	ul.innerHTML = insertdata;
 	$("#accounts-list").append(ul);
+	inProgress = false;
 }
 
 
@@ -111,3 +111,4 @@ $(function() {
 
 });
 
+})()
